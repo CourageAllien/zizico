@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a Call — ZiziCo</title>
+  <meta name="description" content="Book a 15-minute discovery call with ZiziCo. See how personalized microsites, lead magnets, and demos can help you close more deals.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0a0a1e 0%, #16163a 40%, #1a1a4e 100%);
+      min-height: 100vh;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .back-link {
+      position: absolute;
+      top: 2rem;
+      left: 2rem;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.9rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: #fff; }
+    .back-link svg { width: 18px; height: 18px; }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      margin-top: 2rem;
+    }
+
+    .tagline {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 3rem;
+    }
+
+    .booking-container {
+      width: 100%;
+      max-width: 860px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      overflow: hidden;
+    }
+
+    .booking-header {
+      padding: 2.5rem 2.5rem 0;
+    }
+
+    .booking-header .label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #a29bfe;
+      margin-bottom: 0.75rem;
+    }
+
+    .booking-header h1 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .booking-header p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+      margin-bottom: 0.5rem;
+    }
+
+    .benefits {
+      padding: 1.5rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .benefit {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .benefit svg {
+      width: 18px;
+      height: 18px;
+      color: #6c5ce7;
+      flex-shrink: 0;
+    }
+
+    .divider {
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+      margin: 0 2.5rem;
+    }
+
+    /* ===== STEPS ===== */
+    .step { display: none; }
+    .step.active { display: block; }
+
+    .step-header {
+      padding: 2rem 2.5rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .step-header h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .step-indicator {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      font-weight: 500;
+    }
+
+    /* ===== DATE PICKER ===== */
+    .calendar-section {
+      padding: 0 2.5rem 2rem;
+    }
+
+    .month-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .month-nav h3 {
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .month-nav button {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .month-nav button:hover { background: rgba(255,255,255,0.12); }
+
+    .weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      margin-bottom: 0.5rem;
+    }
+
+    .weekdays span {
+      text-align: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      padding: 0.5rem 0;
+    }
+
+    .days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .day {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 2px solid transparent;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .day:hover:not(.disabled):not(.empty) {
+      background: rgba(108, 92, 231, 0.15);
+      border-color: rgba(108, 92, 231, 0.3);
+    }
+
+    .day.selected {
+      background: #6c5ce7;
+      color: #fff;
+      border-color: #6c5ce7;
+    }
+
+    .day.disabled {
+      color: rgba(255,255,255,0.15);
+      cursor: default;
+    }
+
+    .day.empty {
+      cursor: default;
+    }
+
+    .day.today {
+      border-color: rgba(108, 92, 231, 0.4);
+    }
+
+    /* ===== TIME SLOTS ===== */
+    .time-section {
+      padding: 0 2.5rem 2rem;
+    }
+
+    .time-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+    }
+
+    .time-slot {
+      padding: 0.75rem;
+      text-align: center;
+      border: 2px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      transition: all 0.2s;
+      background: transparent;
+    }
+
+    .time-slot:hover {
+      border-color: rgba(108, 92, 231, 0.4);
+      background: rgba(108, 92, 231, 0.08);
+    }
+
+    .time-slot.selected {
+      background: #6c5ce7;
+      color: #fff;
+      border-color: #6c5ce7;
+    }
+
+    /* ===== FORM ===== */
+    .form-section {
+      padding: 0 2.5rem 2.5rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .form-group label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      background: rgba(255,255,255,0.05);
+      border: 1.5px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      font-family: inherit;
+      font-size: 0.9rem;
+      color: #fff;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(255,255,255,0.25);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: #6c5ce7;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .form-group select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='rgba(255,255,255,0.4)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+
+    .form-group select option {
+      background: #1a1a2e;
+      color: #fff;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-row {
+      display: flex;
+      gap: 1rem;
+      padding: 0 2.5rem 2.5rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: inherit;
+      font-weight: 700;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.25s;
+      font-size: 0.95rem;
+      padding: 0.9rem 2rem;
+    }
+
+    .btn--primary {
+      background: #6c5ce7;
+      color: #fff;
+      flex: 1;
+    }
+    .btn--primary:hover {
+      background: #5a4bd1;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(108, 92, 231, 0.35);
+    }
+    .btn--primary:disabled {
+      opacity: 0.4;
+      cursor: default;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn--secondary {
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .btn--secondary:hover {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
+
+    /* ===== CONFIRMATION ===== */
+    .confirmation {
+      display: none;
+      padding: 3rem 2.5rem;
+      text-align: center;
+    }
+
+    .confirmation.active {
+      display: block;
+    }
+
+    .confirmation__icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+
+    .confirmation__icon svg {
+      width: 36px;
+      height: 36px;
+      color: #fff;
+    }
+
+    .confirmation h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+    }
+
+    .confirmation p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    .confirmation__details {
+      margin: 2rem auto;
+      padding: 1.5rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      max-width: 360px;
+    }
+
+    .confirmation__detail {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      font-size: 0.9rem;
+    }
+
+    .confirmation__detail span:first-child {
+      color: rgba(255,255,255,0.4);
+    }
+
+    .confirmation__detail span:last-child {
+      font-weight: 600;
+    }
+
+    .confirmation__note {
+      margin-top: 1.5rem;
+      padding: 1rem 1.5rem;
+      background: rgba(108, 92, 231, 0.1);
+      border: 1px solid rgba(108, 92, 231, 0.2);
+      border-radius: 12px;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .confirmation__note p {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .confirmation__note strong {
+      color: #a29bfe;
+    }
+
+    /* ===== LOADING ===== */
+    .loading-spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top: 2px solid #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 0.5rem;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .btn--loading .loading-spinner { display: inline-block; }
+    .btn--loading { pointer-events: none; opacity: 0.7; }
+
+    /* ===== FOOTER ===== */
+    .page-footer {
+      margin-top: 3rem;
+      text-align: center;
+    }
+
+    .page-footer p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .page-footer .pricing-line {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 0.5rem;
+    }
+
+    .page-footer .pricing-line strong {
+      color: #a29bfe;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      body { padding: 1rem; }
+
+      .back-link { position: static; margin-bottom: 1rem; }
+
+      .logo { margin-top: 0.5rem; }
+
+      .booking-header { padding: 2rem 1.5rem 0; }
+      .benefits { padding: 1.5rem; }
+      .divider { margin: 0 1.5rem; }
+      .step-header { padding: 1.5rem 1.5rem 0.75rem; }
+      .calendar-section { padding: 0 1.5rem 1.5rem; }
+      .time-section { padding: 0 1.5rem 1.5rem; }
+      .form-section { padding: 0 1.5rem 1.5rem; }
+      .btn-row { padding: 0 1.5rem 1.5rem; }
+      .confirmation { padding: 2rem 1.5rem; }
+
+      .booking-header h1 { font-size: 1.35rem; }
+
+      .form-grid { grid-template-columns: 1fr; }
+
+      .time-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* Error toast */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #e74c3c;
+      color: #fff;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      z-index: 9999;
+      transition: transform 0.3s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <a href="/" class="back-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
+    Back to ZiziCo
+  </a>
+
+  <div class="logo">ZiziCo</div>
+  <div class="tagline">Personalized Outreach, Built for You</div>
+
+  <div class="booking-container">
+    <!-- Header -->
+    <div class="booking-header">
+      <div class="label">15-Minute Discovery Call</div>
+      <h1>Let's See How Personalized Outreach Can Help You Close More Deals</h1>
+      <p>This isn't a sales pitch. It's a real conversation about whether personalized microsites, lead magnets, and demos make sense for your sales process.</p>
+    </div>
+
+    <div class="benefits">
+      <div class="benefit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        See how personalized outreach can transform your pipeline
+      </div>
+      <div class="benefit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Learn how we'd build deliverables for your specific prospects
+      </div>
+      <div class="benefit">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Get honest feedback on whether ZiziCo is right for you
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- STEP 1: Select Date -->
+    <div class="step active" id="step1">
+      <div class="step-header">
+        <h2>Select a Date</h2>
+        <span class="step-indicator">Step 1 of 3</span>
+      </div>
+      <div class="calendar-section">
+        <div class="month-nav">
+          <button id="prevMonth" aria-label="Previous month">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <h3 id="monthYear"></h3>
+          <button id="nextMonth" aria-label="Next month">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+        <div class="weekdays">
+          <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+        </div>
+        <div class="days" id="calendarDays"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn--primary" id="toStep2" disabled>Continue</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Select Time -->
+    <div class="step" id="step2">
+      <div class="step-header">
+        <h2>Select a Time</h2>
+        <span class="step-indicator">Step 2 of 3</span>
+      </div>
+      <div class="time-section">
+        <p style="font-size:0.85rem;color:rgba(255,255,255,0.4);margin-bottom:1rem;" id="selectedDateDisplay"></p>
+        <div class="time-grid" id="timeSlots"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn--secondary" id="backToStep1">Back</button>
+        <button class="btn btn--primary" id="toStep3" disabled>Continue</button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Your Details -->
+    <div class="step" id="step3">
+      <div class="step-header">
+        <h2>Your Details</h2>
+        <span class="step-indicator">Step 3 of 3</span>
+      </div>
+      <div class="form-section">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="firstName">First Name *</label>
+            <input type="text" id="firstName" placeholder="Jane" required>
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name *</label>
+            <input type="text" id="lastName" placeholder="Smith" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Work Email *</label>
+            <input type="email" id="email" placeholder="jane@company.com" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone (optional)</label>
+            <input type="tel" id="phone" placeholder="+1 (555) 000-0000">
+          </div>
+          <div class="form-group">
+            <label for="company">Company *</label>
+            <input type="text" id="company" placeholder="Acme Corp" required>
+          </div>
+          <div class="form-group">
+            <label for="role">Your Role *</label>
+            <input type="text" id="role" placeholder="VP of Sales" required>
+          </div>
+          <div class="form-group">
+            <label for="industry">Industry</label>
+            <select id="industry">
+              <option value="">Select your industry</option>
+              <option value="SaaS / Software">SaaS / Software</option>
+              <option value="Financial Services">Financial Services</option>
+              <option value="Agency / Consulting">Agency / Consulting</option>
+              <option value="Medical Devices / Healthcare">Medical Devices / Healthcare</option>
+              <option value="Construction / Contracting">Construction / Contracting</option>
+              <option value="Legal">Legal</option>
+              <option value="Industrial / Manufacturing">Industrial / Manufacturing</option>
+              <option value="Recruiting / Staffing">Recruiting / Staffing</option>
+              <option value="Real Estate / Commercial">Real Estate / Commercial</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="dealSize">Typical Deal Size</label>
+            <select id="dealSize">
+              <option value="">Select range</option>
+              <option value="$10K - $25K">$10K - $25K</option>
+              <option value="$25K - $50K">$25K - $50K</option>
+              <option value="$50K - $100K">$50K - $100K</option>
+              <option value="$100K - $500K">$100K - $500K</option>
+              <option value="$500K+">$500K+</option>
+            </select>
+          </div>
+          <div class="form-group full-width">
+            <label for="whatYouSell">What do you sell and who do you sell to? *</label>
+            <textarea id="whatYouSell" placeholder="e.g. We sell enterprise cybersecurity software to mid-market companies. Our main buyers are CISOs and VP of IT."></textarea>
+          </div>
+          <div class="form-group full-width">
+            <label for="prospect">Name a prospect you're actively working (optional — we'll use them as an example)</label>
+            <input type="text" id="prospect" placeholder="e.g. Acme Corp — trying to reach their VP of Engineering">
+          </div>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn--secondary" id="backToStep2">Back</button>
+        <button class="btn btn--primary" id="submitBooking">
+          <span class="loading-spinner"></span>
+          Book My Call
+        </button>
+      </div>
+    </div>
+
+    <!-- CONFIRMATION -->
+    <div class="confirmation" id="confirmation">
+      <div class="confirmation__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2>You're Booked!</h2>
+      <p>We've sent a confirmation to your email. Check your inbox — we're already preparing something personalized for you.</p>
+
+      <div class="confirmation__details" id="confirmationDetails">
+        <!-- Filled by JS -->
+      </div>
+
+      <div class="confirmation__note">
+        <p><strong>What happens next:</strong> You'll receive a personalized preview showing how microsites, lead magnets, and demos can work for your specific business — check your email shortly.</p>
+      </div>
+
+      <div style="margin-top:2rem;">
+        <a href="/" class="btn btn--primary" style="text-decoration:none;padding:0.9rem 2.5rem;">Back to ZiziCo</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <p class="pricing-line">Starting at <strong>$4,500/mo</strong> · Unlimited requests · Same-day delivery</p>
+    <p>&copy; 2026 ZiziCo. All rights reserved.</p>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ========== STATE ==========
+    let selectedDate = null;
+    let selectedTime = null;
+    let currentMonth = new Date().getMonth();
+    let currentYear = new Date().getFullYear();
+
+    const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const TIME_SLOTS = [
+      '9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM',
+      '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM',
+      '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM',
+      '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM',
+      '5:00 PM'
+    ];
+
+    // ========== ELEMENTS ==========
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
+    const confirmation = document.getElementById('confirmation');
+    const toStep2Btn = document.getElementById('toStep2');
+    const toStep3Btn = document.getElementById('toStep3');
+    const backToStep1Btn = document.getElementById('backToStep1');
+    const backToStep2Btn = document.getElementById('backToStep2');
+    const submitBtn = document.getElementById('submitBooking');
+    const calendarDays = document.getElementById('calendarDays');
+    const monthYearEl = document.getElementById('monthYear');
+    const timeSlotsEl = document.getElementById('timeSlots');
+    const selectedDateDisplayEl = document.getElementById('selectedDateDisplay');
+
+    // ========== CALENDAR ==========
+    function renderCalendar() {
+      const today = new Date();
+      today.setHours(0,0,0,0);
+
+      monthYearEl.textContent = `${MONTHS[currentMonth]} ${currentYear}`;
+
+      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+      let html = '';
+
+      // Empty cells before first day
+      for (let i = 0; i < firstDay; i++) {
+        html += '<div class="day empty"></div>';
+      }
+
+      for (let d = 1; d <= daysInMonth; d++) {
+        const date = new Date(currentYear, currentMonth, d);
+        const dayOfWeek = date.getDay();
+        const isPast = date < today;
+        const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+        const isToday = date.getTime() === today.getTime();
+        const isSelected = selectedDate &&
+          selectedDate.getDate() === d &&
+          selectedDate.getMonth() === currentMonth &&
+          selectedDate.getFullYear() === currentYear;
+
+        let cls = 'day';
+        if (isPast || isWeekend) cls += ' disabled';
+        if (isToday) cls += ' today';
+        if (isSelected) cls += ' selected';
+
+        const dataDate = `${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+        html += `<div class="${cls}" data-date="${dataDate}">${d}</div>`;
+      }
+
+      calendarDays.innerHTML = html;
+
+      // Attach click handlers
+      calendarDays.querySelectorAll('.day:not(.disabled):not(.empty)').forEach(dayEl => {
+        dayEl.addEventListener('click', () => {
+          calendarDays.querySelectorAll('.day').forEach(el => el.classList.remove('selected'));
+          dayEl.classList.add('selected');
+          selectedDate = new Date(dayEl.dataset.date + 'T12:00:00');
+          toStep2Btn.disabled = false;
+        });
+      });
+    }
+
+    document.getElementById('prevMonth').addEventListener('click', () => {
+      const now = new Date();
+      if (currentMonth === now.getMonth() && currentYear === now.getFullYear()) return;
+      currentMonth--;
+      if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+      renderCalendar();
+    });
+
+    document.getElementById('nextMonth').addEventListener('click', () => {
+      currentMonth++;
+      if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+      renderCalendar();
+    });
+
+    renderCalendar();
+
+    // ========== TIME SLOTS ==========
+    function renderTimeSlots() {
+      const dateStr = selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+      selectedDateDisplayEl.textContent = dateStr;
+
+      let html = '';
+      TIME_SLOTS.forEach(slot => {
+        const cls = selectedTime === slot ? 'time-slot selected' : 'time-slot';
+        html += `<div class="${cls}" data-time="${slot}">${slot}</div>`;
+      });
+      timeSlotsEl.innerHTML = html;
+
+      timeSlotsEl.querySelectorAll('.time-slot').forEach(slotEl => {
+        slotEl.addEventListener('click', () => {
+          timeSlotsEl.querySelectorAll('.time-slot').forEach(el => el.classList.remove('selected'));
+          slotEl.classList.add('selected');
+          selectedTime = slotEl.dataset.time;
+          toStep3Btn.disabled = false;
+        });
+      });
+    }
+
+    // ========== STEP NAVIGATION ==========
+    function showStep(stepEl) {
+      [step1, step2, step3].forEach(s => s.classList.remove('active'));
+      confirmation.classList.remove('active');
+      stepEl.classList.add('active');
+    }
+
+    toStep2Btn.addEventListener('click', () => {
+      if (!selectedDate) return;
+      renderTimeSlots();
+      showStep(step2);
+    });
+
+    toStep3Btn.addEventListener('click', () => {
+      if (!selectedTime) return;
+      showStep(step3);
+    });
+
+    backToStep1Btn.addEventListener('click', () => showStep(step1));
+    backToStep2Btn.addEventListener('click', () => showStep(step2));
+
+    // ========== TOAST ==========
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+
+    // ========== SUBMIT BOOKING ==========
+    submitBtn.addEventListener('click', async () => {
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const company = document.getElementById('company').value.trim();
+      const role = document.getElementById('role').value.trim();
+      const industry = document.getElementById('industry').value;
+      const dealSize = document.getElementById('dealSize').value;
+      const whatYouSell = document.getElementById('whatYouSell').value.trim();
+      const prospect = document.getElementById('prospect').value.trim();
+
+      // Validation
+      if (!firstName || !lastName || !email || !company || !role || !whatYouSell) {
+        showToast('Please fill in all required fields.');
+        return;
+      }
+
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showToast('Please enter a valid email address.');
+        return;
+      }
+
+      // Show loading
+      submitBtn.classList.add('btn--loading');
+
+      const bookingData = {
+        firstName, lastName, email, phone,
+        company, role, industry, dealSize,
+        whatYouSell, prospect,
+        date: selectedDate.toISOString(),
+        time: selectedTime,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+      };
+
+      try {
+        const response = await fetch('/api/book', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(bookingData)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+          throw new Error(result.error || 'Something went wrong');
+        }
+
+        // Show confirmation
+        const dateStr = selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+        document.getElementById('confirmationDetails').innerHTML = `
+          <div class="confirmation__detail">
+            <span>Date</span>
+            <span>${dateStr}</span>
+          </div>
+          <div class="confirmation__detail">
+            <span>Time</span>
+            <span>${selectedTime}</span>
+          </div>
+          <div class="confirmation__detail">
+            <span>Name</span>
+            <span>${firstName} ${lastName}</span>
+          </div>
+          <div class="confirmation__detail">
+            <span>Company</span>
+            <span>${company}</span>
+          </div>
+        `;
+
+        [step1, step2, step3].forEach(s => s.classList.remove('active'));
+        document.querySelector('.booking-header').style.display = 'none';
+        document.querySelector('.benefits').style.display = 'none';
+        document.querySelector('.divider').style.display = 'none';
+        confirmation.classList.add('active');
+
+      } catch (err) {
+        showToast(err.message || 'Failed to book. Please try again.');
+      } finally {
+        submitBtn.classList.remove('btn--loading');
+      }
+    });
+  </script>
+</body>
+</html>
+
