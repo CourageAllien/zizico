@@ -4,6 +4,22 @@
     {
       "src": "server.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "styles.css",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "script.js",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "book.html",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -16,9 +32,20 @@
       "dest": "/script.js"
     },
     {
+      "src": "/api/(.*)",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/book",
+      "dest": "/book.html"
+    },
+    {
+      "src": "^/$",
+      "dest": "/index.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "/server.js"
     }
   ]
 }
-
