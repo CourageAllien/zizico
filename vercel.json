@@ -1,7 +1,9 @@
 {
   "version": 2,
+  "buildCommand": "",
+  "outputDirectory": ".",
+  "framework": null,
   "rewrites": [
-    { "source": "/book", "destination": "/book.html" },
-    { "source": "/api/book", "destination": "/api/book" }
+    { "source": "/book", "destination": "/book.html" }
   ]
 }
