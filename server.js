@@ -40,6 +40,11 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname)));
 
 // ── Routes ─────────────────────────────────────────────────────
+// Serve landing page
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 // Serve booking page
 app.get('/book', (req, res) => {
   res.sendFile(path.join(__dirname, 'book.html'));
@@ -558,21 +563,26 @@ function wrapEmailTemplate(innerHtml) {
 
 
 // ═══════════════════════════════════════════════════════════════
-// START SERVER
+// START SERVER (local only — Vercel uses the export below)
 // ═══════════════════════════════════════════════════════════════
-app.listen(PORT, () => {
-  console.log(`\n🚀 Akobs server running at http://localhost:${PORT}`);
-  console.log(`   Landing page: http://localhost:${PORT}`);
-  console.log(`   Booking page: http://localhost:${PORT}/book`);
-  console.log(`\n   Notification email: ${NOTIFICATION_EMAIL}`);
-  console.log(`   From email: ${FROM_EMAIL}`);
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`\n🚀 Akobs server running at http://localhost:${PORT}`);
+    console.log(`   Landing page: http://localhost:${PORT}`);
+    console.log(`   Booking page: http://localhost:${PORT}/book`);
+    console.log(`\n   Notification email: ${NOTIFICATION_EMAIL}`);
+    console.log(`   From email: ${FROM_EMAIL}`);
 
-  if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY.startsWith('re_xx')) {
-    console.log('\n   ⚠️  RESEND_API_KEY not configured — emails will fail');
-  }
-  if (!process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_API_KEY.startsWith('sk-ant-xx')) {
-    console.log('   ⚠️  ANTHROPIC_API_KEY not configured — AI emails will fail');
-  }
-  console.log('');
-});
+    if (!process.env.RESEND_API_KEY || process.env.RESEND_API_KEY.startsWith('re_xx')) {
+      console.log('\n   ⚠️  RESEND_API_KEY not configured — emails will fail');
+    }
+    if (!process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_API_KEY.startsWith('sk-ant-xx')) {
+      console.log('   ⚠️  ANTHROPIC_API_KEY not configured — AI emails will fail');
+    }
+    console.log('');
+  });
+}
+
+// Export for Vercel serverless
+module.exports = app;
 
