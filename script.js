@@ -1,5 +1,5 @@
 /* ============================================================
-   ZiziCo Landing Page — JavaScript
+   Akobs Landing Page — JavaScript
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 const RESEND_KEY = process.env.RESEND_API_KEY || '';
 const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY || '';
 const NOTIFICATION_EMAIL = process.env.NOTIFICATION_EMAIL || 'couragealison1@gmail.com';
-const FROM_EMAIL = process.env.FROM_EMAIL || 'ZiziCo <onboarding@resend.dev>';
+const FROM_EMAIL = process.env.FROM_EMAIL || 'Akobs <onboarding@resend.dev>';
 
 let resend = null;
 let anthropic = null;
@@ -117,7 +117,7 @@ async function sendBookerConfirmation(booking, meetingDate) {
     await client.emails.send({
       from: FROM_EMAIL,
       to: booking.email,
-      subject: `You're booked! Discovery call with ZiziCo — ${dateStr}`,
+      subject: `You're booked! Discovery call with Akobs — ${dateStr}`,
       html: `
         <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #ffffff;">
           <div style="background: linear-gradient(135deg, #0a0a1e, #16163a); padding: 40px 32px; border-radius: 12px 12px 0 0;">
@@ -152,17 +152,17 @@ async function sendBookerConfirmation(booking, meetingDate) {
 
             <p style="font-size: 14px; color: #555; line-height: 1.7; margin: 0 0 16px;">
               <strong style="color: #6c5ce7;">Keep an eye on your inbox.</strong> Before our call, we'll send you
-              personalized examples showing exactly how ZiziCo could help ${booking.company} close more deals.
+              personalized examples showing exactly how Akobs could help ${booking.company} close more deals.
             </p>
 
             <p style="font-size: 14px; color: #888; margin: 24px 0 0;">
-              — The ZiziCo Team
+              — The Akobs Team
             </p>
           </div>
 
           <div style="padding: 20px 32px; background: #fafafe; border-top: 1px solid #eee; border-radius: 0 0 12px 12px;">
             <p style="font-size: 12px; color: #999; margin: 0; text-align: center;">
-              &copy; 2026 ZiziCo · Personalized Outreach, Built for You
+              &copy; 2026 Akobs · Personalized Outreach, Built for You
             </p>
           </div>
         </div>
@@ -174,7 +174,7 @@ async function sendBookerConfirmation(booking, meetingDate) {
   }
 }
 
-// ── Notification email to ZiziCo team ───────────────────────
+// ── Notification email to Akobs team ───────────────────────
 async function sendTeamNotification(booking, meetingDate) {
   const client = getResend();
   if (!client) { console.log('   ⚠️  Resend not configured — skipping team notification'); return; }
@@ -265,7 +265,7 @@ async function generateAndSendWelcomeEmail(booking) {
 
   console.log(`\n🤖 Generating personalized welcome email for ${booking.firstName}...`);
 
-  const prompt = `You are a persuasive, conversational sales copywriter for ZiziCo — a service that builds personalized microsites, lead magnets, and tailored demos for sales teams who sell high-value deals.
+  const prompt = `You are a persuasive, conversational sales copywriter for Akobs — a service that builds personalized microsites, lead magnets, and tailored demos for sales teams who sell high-value deals.
 
 A prospect just booked a discovery call. Here's what we know about them:
 
@@ -286,7 +286,7 @@ Write a personalized HTML email body (just the inner content, no <html>/<body> t
    - **Custom Lead Magnets**: A report, audit, or guide built for one company. Give a specific example relevant to their business.
    - **Tailored Demos**: A pre-configured walkthrough with the prospect's name, data, and use case. Give a specific example.
 4. Builds excitement for the upcoming call
-5. Signs off as "The ZiziCo Team"
+5. Signs off as "The Akobs Team"
 
 Style rules:
 - Use inline CSS for all styling
@@ -309,7 +309,7 @@ Style rules:
     await emailClient.emails.send({
       from: FROM_EMAIL,
       to: booking.email,
-      subject: `${booking.firstName}, here's how ZiziCo can help ${booking.company} close more deals`,
+      subject: `${booking.firstName}, here's how Akobs can help ${booking.company} close more deals`,
       html: wrapEmailTemplate(emailHtml)
     });
 
@@ -328,7 +328,7 @@ async function generateAndSendExamplesEmail(booking) {
 
   console.log(`\n🤖 Generating examples email for ${booking.firstName} (1hr before call)...`);
 
-  const prompt = `You are a persuasive sales copywriter for ZiziCo — a service that builds personalized microsites, lead magnets, and tailored demos for high-value sales teams.
+  const prompt = `You are a persuasive sales copywriter for Akobs — a service that builds personalized microsites, lead magnets, and tailored demos for high-value sales teams.
 
 A prospect has a discovery call in 1 hour. Here's what we know:
 
@@ -356,7 +356,7 @@ Write a personalized HTML email body (just inner content, no <html>/<body> tags)
    - For each: Describe the demo scenario, what data it would be pre-loaded with, and how the prospect would react.
 
 4. Builds excitement: "We'll walk through these on the call and show you exactly how we'd build them."
-5. Signs off as "The ZiziCo Team"
+5. Signs off as "The Akobs Team"
 
 Style rules:
 - Use inline CSS for all styling
@@ -399,7 +399,7 @@ async function generateAndSendProspectEmail(booking) {
 
   const prospectInfo = booking.prospect || 'a typical prospect in their pipeline';
 
-  const prompt = `You are a persuasive sales copywriter and researcher for ZiziCo — a service that builds personalized microsites, lead magnets, and tailored demos for high-value sales teams.
+  const prompt = `You are a persuasive sales copywriter and researcher for Akobs — a service that builds personalized microsites, lead magnets, and tailored demos for high-value sales teams.
 
 A prospect has a discovery call in 10 minutes. Here's what we know:
 
@@ -424,7 +424,7 @@ Write a personalized HTML email body (just inner content, no <html>/<body> tags)
    - Explain the expected impact ("When the [title] at [prospect] opens this...")
 
 4. End with: "This is what we build for every single prospect. Imagine sending something like this to every deal in your pipeline. See you in a few minutes."
-5. Sign off as "The ZiziCo Team"
+5. Sign off as "The Akobs Team"
 
 Style rules:
 - Use inline CSS for all styling
@@ -538,7 +538,7 @@ function wrapEmailTemplate(innerHtml) {
   return `
     <div style="font-family: 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #ffffff;">
       <div style="background: linear-gradient(135deg, #0a0a1e, #16163a); padding: 24px 32px; border-radius: 12px 12px 0 0;">
-        <h2 style="color: #ffffff; font-size: 20px; margin: 0; font-weight: 800;">ZiziCo</h2>
+        <h2 style="color: #ffffff; font-size: 20px; margin: 0; font-weight: 800;">Akobs</h2>
         <p style="color: rgba(255,255,255,0.5); font-size: 12px; margin: 4px 0 0;">Personalized Outreach, Built for You</p>
       </div>
 
@@ -548,7 +548,7 @@ function wrapEmailTemplate(innerHtml) {
 
       <div style="padding: 20px 32px; background: #fafafe; border-top: 1px solid #eee; border-radius: 0 0 12px 12px;">
         <p style="font-size: 12px; color: #999; margin: 0; text-align: center;">
-          &copy; 2026 ZiziCo &middot; Personalized Outreach, Built for You<br>
+          &copy; 2026 Akobs &middot; Personalized Outreach, Built for You<br>
           <a href="#" style="color: #6c5ce7; text-decoration: none;">Unsubscribe</a>
         </p>
       </div>
@@ -561,7 +561,7 @@ function wrapEmailTemplate(innerHtml) {
 // START SERVER
 // ═══════════════════════════════════════════════════════════════
 app.listen(PORT, () => {
-  console.log(`\n🚀 ZiziCo server running at http://localhost:${PORT}`);
+  console.log(`\n🚀 Akobs server running at http://localhost:${PORT}`);
   console.log(`   Landing page: http://localhost:${PORT}`);
   console.log(`   Booking page: http://localhost:${PORT}/book`);
   console.log(`\n   Notification email: ${NOTIFICATION_EMAIL}`);

@@ -1,7 +1,7 @@
 {
-  "name": "zizico-landing",
+  "name": "akobs-landing",
   "version": "1.0.0",
-  "description": "ZiziCo Landing Page with Booking System",
+  "description": "Akobs Landing Page with Booking System",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
